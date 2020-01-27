@@ -10,7 +10,8 @@ COPY pyproject.toml poetry.lock /code/
 
 WORKDIR /code/
 
-RUN apk add --no-cache --virtual .build-deps gcc libc-dev libffi-dev openssl-dev \
+RUN apk add --no-cache postgresql-libs \
+    && apk add --no-cache --virtual .build-deps gcc libc-dev libffi-dev openssl-dev postgresql-dev \
     && pip install 'poetry==1.0.2' \
     && poetry install \
     && apk del --no-cache .build-deps gcc libc-dev

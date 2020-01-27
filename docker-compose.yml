@@ -5,7 +5,18 @@ services:
     build: .
     command: ./manage.py runserver 0.0.0.0:8000
     env_file: .env.dev
+    environment:
+      DATABASE_URL: postgres://django:password@postgres:5432/mysite
     ports:
       - '8000:8000'
+    depends_on:
+      - postgres
     volumes:
       - .:/code
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: django
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mysite
