@@ -1,0 +1,8 @@
+version: "3.7"
+
+services:
+  django:
+    build: .
+    env_file: .env.dev
+    ports:
+      - '8000:8000'

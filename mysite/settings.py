@@ -12,10 +12,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import environ
 env = environ.Env()
-root_path = environ.Path('.')
-
-# NOTE: this is temporary and should only be used for debugging outside docker
-env.read_env(str(root_path.path('.env')))
 
 
 # General settings

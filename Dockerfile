@@ -19,3 +19,5 @@ COPY . /code/
 
 CMD ["gunicorn", "-b", "0.0.0.0:8000", "mysite.wsgi:application"]
 ENTRYPOINT ["poetry", "run"]
+
+EXPOSE 8000
