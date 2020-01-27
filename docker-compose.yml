@@ -7,10 +7,12 @@ services:
     env_file: .env.dev
     environment:
       DATABASE_URL: postgres://django:password@postgres:5432/mysite
+      EMAIL_URL: smtp://mailhog:1025
     ports:
       - '8000:8000'
     depends_on:
       - postgres
+      - mailhog
     volumes:
       - .:/code
 
@@ -20,3 +22,8 @@ services:
       POSTGRES_USER: django
       POSTGRES_PASSWORD: password
       POSTGRES_DB: mysite
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - '8025:8025'
