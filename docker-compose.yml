@@ -3,6 +3,9 @@ version: "3.7"
 services:
   django:
     build: .
+    command: ./manage.py runserver 0.0.0.0:8000
     env_file: .env.dev
     ports:
       - '8000:8000'
+    volumes:
+      - .:/code
