@@ -8,11 +8,13 @@ services:
     environment:
       DATABASE_URL: postgres://django:password@postgres:5432/mysite
       EMAIL_URL: smtp://mailhog:1025
+      CACHE_URL: memcache://memcached:11211
     ports:
       - '8000:8000'
     depends_on:
       - postgres
       - mailhog
+      - memcached
     volumes:
       - .:/code
 
@@ -22,6 +24,9 @@ services:
       POSTGRES_USER: django
       POSTGRES_PASSWORD: password
       POSTGRES_DB: mysite
+
+  memcached:
+    image: memcached
 
   mailhog:
     image: mailhog/mailhog
