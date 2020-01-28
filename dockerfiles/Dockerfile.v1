@@ -1,0 +1,20 @@
+# Which base image this Dockerfile starts with
+FROM python:3.8-slim
+
+# Run a command to generate a new layer.
+RUN pip install Django==3.0.2 django-environ==0.4.5
+
+# Any command after this point is run as
+# if it was from this directory.
+WORKDIR /code/
+
+# Copy all the files from our application into
+# the image.
+COPY . /code/
+
+# Specify which command to use when
+# an override isn't given.
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+# Tell docker that we're running something on port 8000
+EXPOSE 8000

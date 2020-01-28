@@ -1,0 +1,27 @@
+FROM python:3.8-slim
+
+# Magic python environment variables
+ENV PYTHONUNBUFFERED=1 \
+  PYTHONDONTWRITEBYTECODE=1 \
+  PYTHONHASHSEED=random \
+  PIP_NO_CACHE_DIR=off \
+  PIP_DISABLE_PIP_VERSION_CHECK=on
+
+WORKDIR /code/
+COPY requirements.txt /code/
+
+# Install all deps and remove everything we can in a single command to avoid
+# creating additional layers.
+RUN apt-get update \
+    && apt-get install -y build-essential libpq5 libpq-dev \
+    && pip install -r requirements.txt \
+    && apt-get remove -y --purge build-essential libpq-dev \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy in the rest of our code
+COPY . /code/
+
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "mysite.wsgi:application"]
+
+EXPOSE 8000
